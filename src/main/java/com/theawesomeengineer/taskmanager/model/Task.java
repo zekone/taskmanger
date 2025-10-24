@@ -15,15 +15,25 @@ import io.swagger.v3.oas.annotations.media.Schema;
 
 
 import java.util.*;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
 import jakarta.annotation.Generated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 
 /**
  * Task
  */
-
+@Entity
+@Table(name = "tasks")
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-10-23T23:04:10.168047188+08:00[Asia/Singapore]", comments = "Generator version: 7.15.0")
 public class Task {
 
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
   private String title;
@@ -33,9 +43,11 @@ public class Task {
   private Boolean completed;
 
   @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+  @Column(name = "created_at", updatable = false)
   private OffsetDateTime createdAt;
 
   @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+  @Column(name = "updated_at", updatable = false)
   private OffsetDateTime updatedAt;
 
   public Task() {
@@ -221,4 +233,5 @@ public class Task {
     return o.toString().replace("\n", "\n    ");
   }
 }
+
 

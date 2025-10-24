@@ -36,4 +36,7 @@ out/
 ### VS Code ###
 .vscode/
 
+### SQL Data ###
+mysql_data
+
 .DS_Store

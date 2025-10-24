@@ -1,0 +1,15 @@
+services:
+  taskdb:
+    image: mysql:8.0
+    container_name: ${CONTAINER_NAME}
+    environment:
+      MYSQL_ROOT_PASSWORD: ${ROOT_PASS}
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASS}
+    volumes:
+      - ./${DATA_DIR}:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    restart: unless-stopped
+    
