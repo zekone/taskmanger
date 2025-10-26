@@ -36,7 +36,17 @@ done
 
 # Create tasks table
 echo "Creating 'tasks' table..."
-docker exec -i $CONTAINER_NAME mysql -u$DB_USER -p$DB_PASS $DB_NAME < "$INIT_SQL"
+COUNT=0
+until docker exec -i $CONTAINER_NAME mysql -u$DB_USER -p$DB_PASS $DB_NAME < "$INIT_SQL"; do
+    COUNT=$((COUNT + 1))
+    if [ "$COUNT" -ge "$MAX_RETRIES" ]; then
+        echo "Failed to import tasks.sql after $MAX_RETRIES attempts. Exiting."
+        exit 1
+    fi
+    echo "Retrying import of tasks.sql... (attempt $COUNT)"
+    sleep 5
+done
+
 
 # Build project
 echo "Cleaning and building project..."
