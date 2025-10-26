@@ -37,6 +37,18 @@ jobs:
 
       - name: Run unit tests
         run: ./gradlew test --no-daemon
+      
+      - uses: actions/upload-artifact@v3
+        with:
+          name: unit-test-reports
+          path: build/reports/tests/test
+          retention-days: 7
 
       - name: Run integration tests
         run: ./gradlew integrationTest --no-daemon
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: integration-test-reports
+          path: build/reports/tests/integrationTest
+          retention-days: 7
