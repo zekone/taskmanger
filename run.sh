@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e
 
 if [ -f .env ]; then
     export $(grep -v '^#' .env | xargs)
@@ -37,3 +38,10 @@ done
 echo "Creating 'tasks' table..."
 docker exec -i $CONTAINER_NAME mysql -u$DB_USER -p$DB_PASS $DB_NAME < "$INIT_SQL"
 
+# Build project
+echo "Cleaning and building project..."
+./gradlew clean build
+
+# Run
+echo "Running Spring Boot application..."
+./gradlew bootRun
